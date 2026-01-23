@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 header {
     background-color: #0066cc;
     color: white;
@@ -77,3 +78,84 @@ tr:nth-child(even) {
 
 
 
+=======
+header {
+    background-color: #0066cc;
+    color: white;
+    padding: 20px;
+}
+
+header h1 {
+    color: white;
+}
+
+header p {
+    color: white;
+}
+
+header nav a {
+    color: white;
+}
+
+
+h2 {
+    color: #333;
+}
+
+strong {
+    color: #ff9933;
+}
+
+
+p {
+    color: #333;
+}
+
+
+ol li {
+    color: #ff9933;
+}
+
+
+input,
+textarea {
+    border: 2px solid #00cc00;
+}
+
+button {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0052a3;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+tr:nth-child(even) {
+    background-color: #e6f2ff;
+}
+
+
+
+
+>>>>>>> aa45b86f949b484d2f4d95b544f8e4679e844e7c
