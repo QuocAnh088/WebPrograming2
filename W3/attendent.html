@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculator</h1>
+        
+        <div class="input-group">
+            <label id="label1">Input 1</label>
+            <input type="text" id="input1" placeholder="Enter value">
+            
+            <label id="label2">Input 2</label>
+            <input type="text" id="input2" placeholder="Enter value">
+        </div>
+
+        <div class="button-group">
+            <button class="calc-btn" onclick="setupFunction('Area')">Area</button>
+            <button class="calc-btn" onclick="setupFunction('Perimeter')">Perimeter</button>
+            <button class="calc-btn" onclick="setupFunction('Average')">Average</button>
+            <button class="calc-btn" onclick="setupFunction('BMI')">BMI</button>
+            <button class="calc-btn" onclick="setupFunction('TotalMinutes')">Total Minutes</button>
+            <button class="calc-btn" onclick="setupFunction('Maximum')">Maximum</button>
+            <button class="reset-btn" onclick="reset()">Reset</button>
+        </div>
+
+        <div class="result-area" id="resultArea"></div>
+    </div>
+
+    
+    <script>
+        function calcArea(width, height) {
+            let area = width * height;
+            return area;
+        }
+        function calcPerimeter(width, height) {
+            let perimeter = 2 * (width + height);
+            return perimeter;
+        }
+        function calcAverage(numbers) {
+            const sum = numbers.reduce((acc, num) => acc + num, 0);
+            let average = sum / numbers.length;
+            return average;
+        }
+        function calcBMI(weight, height) {
+            let bmi = weight / (height * height);
+            return bmi;
+        }
+        function calcTotalMinutes(hours, minutes) {
+            let totalMinutes = (hours * 60) + minutes;
+            return totalMinutes;
+        }
+        function findMaximum(numbers) {
+            let maximum = Math.max(...numbers);
+            return maximum;
+        }
+
+        let currentFunction = null;
+
+        function setupFunction(funcName) {
+            currentFunction = funcName;
+            const inputLabels = {
+                'Area': ['Width', 'Height'],
+                'Perimeter': ['Width', 'Height'],
+                'Average': ['Numbers (comma separated)', ''],
+                'BMI': ['Weight (kg)', 'Height (m)'],
+                'TotalMinutes': ['Hours', 'Minutes'],
+                'Maximum': ['Numbers (comma separated)', '']
+            };
+
+            const labels = inputLabels[funcName];
+            document.getElementById('label1').textContent = labels[0];
+            document.getElementById('label2').textContent = labels[1];
+            
+            const input2 = document.getElementById('input2');
+            if (funcName === 'Average' || funcName === 'Maximum') {
+                input2.style.display = 'none';
+                document.getElementById('label2').style.display = 'none';
+            } else {
+                input2.style.display = 'block';
+                document.getElementById('label2').style.display = 'block';
+            }
+
+            // Calculate immediately with current input values
+            calculate();
+        }
+
+        function calculate() {
+            if (!currentFunction) {
+                return;
+            }
+
+            const input1Value = document.getElementById('input1').value;
+            const input2Value = document.getElementById('input2').value;
+            let result;
+
+            try {
+                if (currentFunction === 'Area') {
+                    const input1 = parseFloat(input1Value);
+                    const input2 = parseFloat(input2Value);
+                    if (isNaN(input1) || isNaN(input2) || input1Value === '' || input2Value === '') return;
+                    result = calcArea(input1, input2);
+                    displayResult('Area', result.toFixed(2));
+                } 
+                else if (currentFunction === 'Perimeter') {
+                    const input1 = parseFloat(input1Value);
+                    const input2 = parseFloat(input2Value);
+                    if (isNaN(input1) || isNaN(input2) || input1Value === '' || input2Value === '') return;
+                    result = calcPerimeter(input1, input2);
+                    displayResult('Perimeter', result.toFixed(2));
+                } 
+                else if (currentFunction === 'Average') {
+                    if (input1Value === '') return;
+                    const numbers = input1Value.split(',').map(n => parseFloat(n.trim()));
+                    if (numbers.some(isNaN)) return;
+                    result = calcAverage(numbers);
+                    displayResult('Average', result.toFixed(2));
+                } 
+                else if (currentFunction === 'BMI') {
+                    const input1 = parseFloat(input1Value);
+                    const input2 = parseFloat(input2Value);
+                    if (isNaN(input1) || isNaN(input2) || input1Value === '' || input2Value === '') return;
+                    result = calcBMI(input1, input2);
+                    displayResult('BMI', result.toFixed(2));
+                } 
+                else if (currentFunction === 'TotalMinutes') {
+                    const input1 = parseFloat(input1Value);
+                    const input2 = parseFloat(input2Value);
+                    if (isNaN(input1) || isNaN(input2) || input1Value === '' || input2Value === '') return;
+                    result = calcTotalMinutes(input1, input2);
+                    displayResult('Total Minutes', result);
+                } 
+                else if (currentFunction === 'Maximum') {
+                    if (input1Value === '') return;
+                    const numbers = input1Value.split(',').map(n => parseFloat(n.trim()));
+                    if (numbers.some(isNaN)) return;
+                    result = findMaximum(numbers);
+                    displayResult('Maximum', result);
+                }
+            } catch (error) {
+                // Silent fail
+            }
+        }
+
+        function displayResult(label, value) {
+            const resultArea = document.getElementById('resultArea');
+            resultArea.innerHTML = `
+                <p class="result-label">Result ${label} is ${value}</p>
+            `;
+        }
+
+        function reset() {
+            currentFunction = null;
+            document.getElementById('input1').value = '';
+            document.getElementById('input2').value = '';
+            document.getElementById('label1').textContent = 'Input 1';
+            document.getElementById('label2').textContent = 'Input 2';
+            document.getElementById('input2').style.display = 'block';
+            document.getElementById('label2').style.display = 'block';
+            document.getElementById('resultArea').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
